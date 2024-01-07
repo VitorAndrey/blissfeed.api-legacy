@@ -17,7 +17,12 @@ export async function authenticate(
   try {
     const authenticateUseCase = makeAuthenticateUseCase();
 
-    await authenticateUseCase.execute({ email, password });
+    const authenticatedUser = await authenticateUseCase.execute({
+      email,
+      password,
+    });
+
+    return reply.status(200).send(authenticatedUser);
   } catch (error) {
     if (error instanceof InvalidCredentialsError) {
       return reply.status(401).send({ message: error.message });
@@ -25,6 +30,4 @@ export async function authenticate(
 
     throw error;
   }
-
-  return reply.status(200).send();
 }
