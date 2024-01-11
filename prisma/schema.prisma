@@ -38,6 +38,7 @@ model Message {
   sentByUser     Boolean
   timestamp      DateTime @default(now())
   conversationId String
+  publishable    Boolean
 
   conversation Conversation @relation(fields: [conversationId], references: [id])
 
